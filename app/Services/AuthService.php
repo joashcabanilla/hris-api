@@ -1,0 +1,106 @@
+<?php
+
+namespace App\Services;
+use Illuminate\Support\Facades\Mail;
+use Illuminate\Support\Facades\Hash;
+
+//JWT Authentication
+use Tymon\JWTAuth\Facades\JWTAuth;
+
+//Mail
+use App\Mail\SendOtpMail;
+
+//Models
+use App\Models\User;
+
+class AuthService
+{
+    /**
+     * Validate user credentials.
+     *
+     * @param string $username
+     * @param string $password
+     * @return object
+     */  
+    public function validateCredentials($username, $password) : object
+    {
+        $result["success"] = false; 
+        
+        $user = User::withTrashed()->where("username", $username)->orWhere("email",$username)->first();
+
+        if(!$user){
+            $result["message"] = "The username or email you entered is incorrect.";
+            return (object) $result;
+        }else{
+            if($user->trashed()){
+                $result["message"] = "Your account has been deactivated.";
+                return (object) $result;
+            }
+
+            if($user->status == "locked"){
+                $result["message"] = "Your account is locked. Please contact support.";
+                return (object) $result;
+            }
+
+            if(Hash::check($password,$user->password)){
+                if(!$user->hasVerifiedEmail()){
+                    $result["redirect"] = "verify-email";
+                }
+                $result["success"] = true;
+                $result["message"] = "Successfully logged in.";
+                $result["user"] = $user;
+                return (object) $result;
+            }
+
+            // If password does not match, increment login attempts
+            $user->increment("login_attempts");
+            if($user->login_attempts >= 3){
+                $user->status = "locked";
+                $user->save();
+                $result["message"] = "Your account has been locked due to multiple failed login attempts.";
+                return (object) $result;
+            }
+
+            $result["message"] = "The password you entered is incorrect.";
+            return (object) $result; 
+        }
+    }
+
+    /**
+     * Generate OTP.
+     * @param User $user
+     * @return string
+     */
+    public function generateOtp($user) : string
+    {
+        $otp = rand(100000, 999999);
+        $user->otp = $otp;
+        $user->otp_expires_at = now()->addMinutes(5);
+        $user->save();
+        return (string) $otp;
+    }
+
+    /**
+     * Send OTP to user.
+     * @param User $user
+     * @return void
+     */
+    public function sendEmailOtp($otp, $subject, $user) : void
+    {
+        Mail::to($user->email)->send(new SendOtpMail($otp, $subject, $user));
+    }
+
+    /**
+     * Generate JWT token for user.
+     * @param User $user
+     * @return string
+     */
+    public function generateToken($user) : string
+    {  
+        return JWTAuth::fromUser($user);
+    }
+
+    /**
+     * Reset Login Attempts.
+     */
+}
