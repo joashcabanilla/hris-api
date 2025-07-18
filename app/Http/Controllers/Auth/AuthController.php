@@ -10,6 +10,7 @@ use App\Http\Requests\Auth\LoginRequest;
 
 //Actions
 use App\Actions\Auth\LoginAction;
+use App\Actions\Auth\LockUserAccountAction;
 
 class AuthController extends Controller
 {
@@ -26,8 +27,18 @@ class AuthController extends Controller
         return response()->json([
             "success" => $response->success,
             "message" => $response->message,
+            "user" => $response->user ?? null,
             "token" => $response->token ?? null,
             "redirect" => $response->redirect ?? null
+        ]);
+    }
+
+    public function lockUserAccount(Request $request, LockUserAccountAction $LockUserAccountAction)
+    {
+        $response = $LockUserAccountAction->handle($request);
+        return response()->json([
+            "success" => $response->success,
+            "message" => $response->message
         ]);
     }
 }

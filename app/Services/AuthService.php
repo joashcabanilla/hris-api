@@ -48,19 +48,11 @@ class AuthService
                 }
                 $result["success"] = true;
                 $result["message"] = "Successfully logged in.";
-                $result["user"] = $user;
                 return (object) $result;
             }
-
-            // If password does not match, increment login attempts
-            $user->increment("login_attempts");
-            if($user->login_attempts >= 3){
-                $user->status = "locked";
-                $user->save();
-                $result["message"] = "Your account has been locked due to multiple failed login attempts.";
-                return (object) $result;
-            }
-
+            
+            // If password is incorrect
+            $result["user"] = $user;
             $result["message"] = "The password you entered is incorrect.";
             return (object) $result; 
         }
@@ -101,6 +93,15 @@ class AuthService
     }
 
     /**
-     * Reset Login Attempts.
+     * locked user account.
+     * @param id $userId
      */
+    public function lockUserAccount($userId) : void
+    {
+        $user = User::find($userId);
+        if($user){
+            $user->status = "locked";
+            $user->save();
+        }
+    }
 }

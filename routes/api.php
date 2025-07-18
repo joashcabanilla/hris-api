@@ -9,6 +9,9 @@ use Illuminate\Support\Facades\Hash;
  */
 Route::prefix("auth")->group(
     function () {
+        //login route
         Route::post("login",[AuthController::class, "login"]);
+        //locked user account route
+        Route::post("lockeduser",[AuthController::class, "lockUserAccount"]);
     }
 );

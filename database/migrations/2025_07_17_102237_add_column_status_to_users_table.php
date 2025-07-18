@@ -16,7 +16,7 @@ class AddColumnStatusToUsersTable extends Migration
         Schema::table('users', function (Blueprint $table) {
             $table->enum("status", ["active", "locked"])
                   ->default("active")
-                  ->after("login_attempts")
+                  ->after("last_login_ip")
                   ->comment("User status: active or locked");
         });
     }
