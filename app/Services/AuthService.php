@@ -41,7 +41,8 @@ class AuthService
                 $result["message"] = "Your account is locked. Please contact support.";
                 return (object) $result;
             }
-
+            
+            $result["user"] = $user;
             if(Hash::check($password,$user->password)){
                 if(!$user->hasVerifiedEmail()){
                     $result["redirect"] = "verify-email";
@@ -52,7 +53,6 @@ class AuthService
             }
             
             // If password is incorrect
-            $result["user"] = $user;
             $result["message"] = "The password you entered is incorrect.";
             return (object) $result; 
         }
