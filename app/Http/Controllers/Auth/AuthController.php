@@ -11,6 +11,7 @@ use App\Http\Requests\Auth\LoginRequest;
 //Actions
 use App\Actions\Auth\LoginAction;
 use App\Actions\Auth\LockUserAccountAction;
+use App\Actions\Auth\ResendOtpAction;
 
 class AuthController extends Controller
 {
@@ -23,7 +24,7 @@ class AuthController extends Controller
     public function login(LoginRequest $request, LoginAction $loginAction)
     {
         $data = $request->validated();
-        $response = $loginAction->handle((object) $data);
+        $response = $loginAction->handle((object) $data, $request->ip());
         return response()->json([
             "success" => $response->success,
             "message" => $response->message,
@@ -33,9 +34,17 @@ class AuthController extends Controller
         ]);
     }
 
-    public function lockUserAccount(Request $request, LockUserAccountAction $LockUserAccountAction)
+    public function lockUserAccount(Request $request, LockUserAccountAction $lockUserAccountAction)
     {
-        $response = $LockUserAccountAction->handle($request);
+        $response = $lockUserAccountAction->handle($request);
+        return response()->json([
+            "success" => $response->success,
+            "message" => $response->message
+        ]);
+    }
+
+    public function resendOTP(Request $request, ResendOtpAction $resendOtpAction){
+        $response = $resendOtpAction->handle($request);
         return response()->json([
             "success" => $response->success,
             "message" => $response->message

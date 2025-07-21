@@ -13,5 +13,7 @@ Route::prefix("auth")->group(
         Route::post("login",[AuthController::class, "login"]);
         //locked user account route
         Route::post("lockeduser",[AuthController::class, "lockUserAccount"]);
+        //Resend OTP
+        Route::post("resendOTP", [AuthController::class, "resendOTP"]);
     }
 );

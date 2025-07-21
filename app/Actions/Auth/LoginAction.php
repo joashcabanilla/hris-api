@@ -5,10 +5,12 @@ namespace App\Actions\Auth;
 class LoginAction extends BaseAction
 {
     /**
+     * @param $data = validated data from login form.
+     * @param $ip = IP address.
      * @return object
      * Handle the login action.
      */
-    public function handle($data) : object
+    public function handle($data, $ip) : object
     {
         $result = $this->authService->validateCredentials($data->username, $data->password);
 
@@ -19,6 +21,7 @@ class LoginAction extends BaseAction
                 $this->authService->sendEmailOtp($otp, "Email Verification Code", $result->user);
             }
 
+            $this->authService->saveLoginTimestamp($result->user, $ip);
             $result->token = $this->authService->generateToken($result->user);
         }
         

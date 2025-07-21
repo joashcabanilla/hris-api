@@ -93,6 +93,19 @@ class AuthService
     }
 
     /**
+     * save last login and last ip address.
+     * @param User $user
+     * @param $lastLogin = timestamp
+     * @param $lastIp = last ip address
+     */
+    public function saveLoginTimestamp($user, $lastIp) : void
+    {
+        $user->last_login_at = now();
+        $user->last_login_ip = $lastIp;
+        $user->save();
+    }
+
+    /**
      * locked user account.
      * @param id $userId
      */
