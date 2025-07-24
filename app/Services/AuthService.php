@@ -61,13 +61,13 @@ class AuthService
     /**
      * Generate OTP.
      * @param User $user
-     * @return string
+     * @return string OTP
      */
     public function generateOtp($user) : string
     {
         $otp = rand(100000, 999999);
         $user->otp = $otp;
-        $user->otp_expires_at = now()->addMinutes(5);
+        $user->otp_expires_at = now()->addMinutes(2);
         $user->save();
         return (string) $otp;
     }
@@ -115,6 +115,26 @@ class AuthService
         if($user){
             $user->status = "locked";
             $user->save();
+        }
+    }
+
+    /**
+     * Find User in UserModel.
+     * @param id $id
+     * @return User
+     */
+    public function getUser($id = null, $username = null, $email = null): User
+    {
+        if(!empty($id)){
+            return User::find($id);
+        }
+
+        if(!empty($username)){
+            return User::where("username",$username)->first();
+        }
+
+        if(!empty($email)){
+            return User::where("email", $email)->first();
         }
     }
 }

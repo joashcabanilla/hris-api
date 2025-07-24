@@ -12,6 +12,7 @@ use App\Http\Requests\Auth\LoginRequest;
 use App\Actions\Auth\LoginAction;
 use App\Actions\Auth\LockUserAccountAction;
 use App\Actions\Auth\ResendOtpAction;
+use App\Actions\Auth\ValidateOTP;
 
 class AuthController extends Controller
 {
@@ -50,4 +51,13 @@ class AuthController extends Controller
             "message" => $response->message
         ]);
     }
+
+    public function validateOTP(Request $request, ValidateOTP $validateOtpAction){
+        $response = $validateOtpAction->handle($request);
+        return response()->json([
+            "success" => $response->success,
+            "message" => $response->message
+        ]);
+    }
+        
 }
