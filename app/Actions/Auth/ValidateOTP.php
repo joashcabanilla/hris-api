@@ -11,7 +11,7 @@ class ValidateOTP extends BaseAction
     public function handle($request) : object
     {
         $result["success"] = false;
-        $result["message"] = "test resend OTP";
+        $result["message"] = "test validate OTP";
         return (object) $result;
     }
 }
