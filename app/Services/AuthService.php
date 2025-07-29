@@ -137,4 +137,33 @@ class AuthService
             return User::where("email", $email)->first();
         }
     }
+
+
+    /**
+     * Validate the OTP for the given email.
+     *
+     * @param string $email
+     * @param string $otp
+     * @return object result of validation
+     */
+    public function validateOtp($id, $otp) : object
+    {
+        $result["success"] = false;
+        $user = User::find($id);
+
+        if (!$user) {
+            $result["message"] = "User not found.";
+        } elseif ($user->otp !== $otp) {
+            $result["message"] = "Invalid OTP.";
+        } elseif ($user->otp_expires_at < now()) {
+            $result["message"] = "OTP has expired.";
+        } else {
+            $result["success"] = true;
+            $result["user"] = $user;
+            $user->update(["otp" => null, "otp_expires_at" => null]);
+            $result["message"] = "OTP validated successfully.";
+        }
+
+        return (object) $result;
+    }
 }

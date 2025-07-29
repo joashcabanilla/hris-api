@@ -16,6 +16,6 @@ Route::prefix("auth")->group(
         //Resend OTP
         Route::post("resendOTP", [AuthController::class, "resendOTP"]);
         //validate OTP
-        Route::post("validateOTP", [AuthController::class, "validateOTP"]);
+        Route::post("verifyEmail", [AuthController::class, "verifyEmail"]);
     }
 );

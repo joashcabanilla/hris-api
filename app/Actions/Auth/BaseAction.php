@@ -5,7 +5,6 @@ namespace App\Actions\Auth;
 //Services
 use App\Services\AuthService;
 
-
 class BaseAction
 {
     protected AuthService $authService;
