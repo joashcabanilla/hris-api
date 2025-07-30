@@ -13,6 +13,7 @@ use App\Actions\Auth\LoginAction;
 use App\Actions\Auth\LockUserAccountAction;
 use App\Actions\Auth\ResendOtpAction;
 use App\Actions\Auth\VerifyEmailAction;
+use App\Actions\Auth\FindAccountAction;
 
 class AuthController extends Controller
 {
@@ -59,4 +60,13 @@ class AuthController extends Controller
             "message" => $response->message
         ]);
     }   
+
+    public function findAccount(Request $request, FindAccountAction $findAccountAction){
+        $response = $findAccountAction->handle($request);
+        return response()->json([
+            "success" => $response->success,
+            "message" => $response->message,
+            "user" => $response->user
+        ]);
+    }
 }

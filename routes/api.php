@@ -17,5 +17,7 @@ Route::prefix("auth")->group(
         Route::post("resendOTP", [AuthController::class, "resendOTP"]);
         //validate OTP
         Route::post("verifyEmail", [AuthController::class, "verifyEmail"]);
+        //Find Account
+        Route::post("findAccount", [AuthController::class, "findAccount"]);
     }
 );

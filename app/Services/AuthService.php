@@ -166,4 +166,15 @@ class AuthService
 
         return (object) $result;
     }
+
+    /**
+     * Find a user account by email.
+     *
+     * @param  string  $email
+     * @return \App\Models\User|null
+    */
+    public function findAccount(string $email): ?User
+    {
+        return User::where('email', $email)->first();
+    }
 }
