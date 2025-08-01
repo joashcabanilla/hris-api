@@ -18,7 +18,7 @@
                         <td>
                             <p style="font-size: 16px; color: #555; margin: 0 0 15px;">Hi {{ $user->firstname . " " . $user->lastname }},</p>
                             <p style="font-size: 16px; color: #555; margin: 0 0 20px;">
-                                Please use the verification code below to confirm your email address.
+                                Use the code below to confirm and continue.
                             </p>
 
                             <div style="text-align: center; margin: 30px 0;">
@@ -28,7 +28,7 @@
                             </div>
 
                             <p style="font-size: 14px; color: #999; text-align: center;">
-                                This code will expire in {{ $expiration ?? '5' }} minutes.
+                                This code will expire in 2 minutes.
                             </p>
 
                             <p style="font-size: 14px; color: #999; margin-top: 30px;">

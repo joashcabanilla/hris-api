@@ -16,7 +16,7 @@ class ResendOtpAction extends BaseAction
         $user = $this->authService->getUser($request->id);
         if($user){
             $otp = $this->authService->generateOtp($user);
-            $this->authService->sendEmailOtp($otp, "Email Verification Code", $user);
+            $this->authService->sendEmailOtp($otp, "Verification Code", $user);
             $result["success"] = true;
             $result["message"] = "OTP resent successfully. Please check your inbox.";
         }

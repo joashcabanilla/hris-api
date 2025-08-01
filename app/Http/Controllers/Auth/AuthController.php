@@ -7,6 +7,7 @@ use Illuminate\Http\Request;
 
 //Form Request for validation
 use App\Http\Requests\Auth\LoginRequest;
+use App\Http\Requests\Auth\UpdateUserCredentialRequest;
 
 //Actions
 use App\Actions\Auth\LoginAction;
@@ -14,6 +15,7 @@ use App\Actions\Auth\LockUserAccountAction;
 use App\Actions\Auth\ResendOtpAction;
 use App\Actions\Auth\VerifyEmailAction;
 use App\Actions\Auth\FindAccountAction;
+use App\Actions\Auth\ValidateOtpAction;
 
 class AuthController extends Controller
 {
@@ -68,5 +70,22 @@ class AuthController extends Controller
             "message" => $response->message,
             "user" => $response->user
         ]);
+    }
+
+    public function validateOtp(Request $request, ValidateOtpAction $validateOtpAction){
+        $response = $validateOtpAction->handle($request);
+        return response()->json([
+            "success" => $response->success,
+            "message" => $response->message,
+        ]);
+    }
+
+    public function updateUserCredential(UpdateUserCredentialRequest $request){
+        $data = $request->validated();
+        return response()->json([
+            "success" => true,
+            "message" => "test api",
+            "data" => $data
+        ]);      
     }
 }

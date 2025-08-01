@@ -15,9 +15,13 @@ Route::prefix("auth")->group(
         Route::post("lockeduser",[AuthController::class, "lockUserAccount"]);
         //Resend OTP
         Route::post("resendOTP", [AuthController::class, "resendOTP"]);
-        //validate OTP
+        //verify Email
         Route::post("verifyEmail", [AuthController::class, "verifyEmail"]);
         //Find Account
         Route::post("findAccount", [AuthController::class, "findAccount"]);
+        //Validate OTP
+        Route::post("validateOtp", [AuthController::class, "validateOtp"]);
+        //Update User Credentials
+        Route::patch("updateUserCredential", [AuthController::class, "updateUserCredential"]);
     }
 );

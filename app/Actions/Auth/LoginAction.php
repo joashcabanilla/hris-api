@@ -18,7 +18,7 @@ class LoginAction extends BaseAction
             if(isset($result->redirect) == "verify-email"){
                 $result->message = "Please verify your email to complete the login process.";
                 $otp = $this->authService->generateOtp($result->user);
-                $this->authService->sendEmailOtp($otp, "Email Verification Code", $result->user);
+                $this->authService->sendEmailOtp($otp, "Verification Code", $result->user);
             }
 
             $this->authService->saveLoginTimestamp($result->user, $ip);
