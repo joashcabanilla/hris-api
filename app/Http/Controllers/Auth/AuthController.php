@@ -16,6 +16,7 @@ use App\Actions\Auth\ResendOtpAction;
 use App\Actions\Auth\VerifyEmailAction;
 use App\Actions\Auth\FindAccountAction;
 use App\Actions\Auth\ValidateOtpAction;
+use App\Actions\Auth\UpdateCredentialAction;
 
 class AuthController extends Controller
 {
@@ -80,12 +81,12 @@ class AuthController extends Controller
         ]);
     }
 
-    public function updateUserCredential(UpdateUserCredentialRequest $request){
-        $data = $request->validated();
+    public function updateUserCredential(UpdateUserCredentialRequest $request, UpdateCredentialAction $updateCredentialAction){
+        $request->validated();
+        $response = $updateCredentialAction->handle((object) $request->all());
         return response()->json([
-            "success" => true,
-            "message" => "test api",
-            "data" => $data
+            "success" => $response->success,
+            "message" => $response->message,
         ]);      
     }
 }

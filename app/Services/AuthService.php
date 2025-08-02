@@ -26,7 +26,10 @@ class AuthService
     {
         $result["success"] = false; 
         
-        $user = User::withTrashed()->where("username", $username)->orWhere("email",$username)->first();
+        $user = User::withTrashed()->where(function ($query) use ($username) {
+            $query->where('username', $username)
+                  ->orWhere('email', $username);
+        })->first();
 
         if(!$user){
             $result["message"] = "The username or email you entered is incorrect.";
@@ -173,8 +176,23 @@ class AuthService
      * @param  string  $email
      * @return \App\Models\User|null
     */
-    public function findAccount(string $email): ?User
+    public function findAccount(string $email) : ?User
     {
         return User::where('email', $email)->first();
+    }
+
+    /**
+     * Update User Credentails
+     * @param string $id
+     * @param string $username
+     * @param string $password 
+     * @return void
+     */
+    public function updateCredentials($id, $username, $password) : void 
+    {
+        User::find($id)->update([
+            "username" => $username,
+            "password" => $password
+        ]);
     }
 }
