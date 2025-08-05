@@ -17,6 +17,7 @@ use App\Actions\Auth\VerifyEmailAction;
 use App\Actions\Auth\FindAccountAction;
 use App\Actions\Auth\ValidateOtpAction;
 use App\Actions\Auth\UpdateCredentialAction;
+use App\Actions\Auth\LogoutAction;
 
 class AuthController extends Controller
 {
@@ -88,5 +89,13 @@ class AuthController extends Controller
             "success" => $response->success,
             "message" => $response->message,
         ]);      
+    }
+
+    public function logout(LogoutAction $logoutAction){
+        $response = $logoutAction->handle();
+        return response()->json([
+            "success" => $response->success,
+            "message" => $response->message,
+        ]); 
     }
 }

@@ -23,5 +23,7 @@ Route::prefix("auth")->group(
         Route::post("validateOtp", [AuthController::class, "validateOtp"]);
         //Update User Credentials
         Route::patch("updateUserCredential", [AuthController::class, "updateUserCredential"]);
+        //logout route
+        Route::middleware("auth:api")->post("/logout", [AuthController::class, "logout"]);
     }
 );

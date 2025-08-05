@@ -3,6 +3,8 @@
 namespace App\Services;
 use Illuminate\Support\Facades\Mail;
 use Illuminate\Support\Facades\Hash;
+use Illuminate\Support\Facades\DB;
+use Carbon\Carbon;
 
 //JWT Authentication
 use Tymon\JWTAuth\Facades\JWTAuth;
@@ -194,5 +196,14 @@ class AuthService
             "username" => $username,
             "password" => $password
         ]);
+    }
+
+    /**
+     * Log out user
+     */
+    public function logout(): void
+    {
+        JWTAuth::invalidate(JWTAuth::getToken());
+        DB::table("cache")->where("expiration", "<", Carbon::now()->subDay()->timestamp)->limit(100)->delete();
     }
 }
