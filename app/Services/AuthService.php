@@ -204,6 +204,5 @@ class AuthService
     public function logout(): void
     {
         JWTAuth::invalidate(JWTAuth::getToken());
-        DB::table("cache")->where("expiration", "<", Carbon::now()->subDay()->timestamp)->limit(100)->delete();
     }
 }

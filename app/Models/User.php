@@ -23,6 +23,7 @@ class User extends Authenticatable implements JWTSubject
      */
     protected $fillable = [
         "usertype_id",
+        "profile_picture",
         "firstname",
         "middlename",
         "lastname",
@@ -44,6 +45,7 @@ class User extends Authenticatable implements JWTSubject
      * @var array<int, string>
      */
     protected $hidden = [
+        "username",
         "password",
         "otp",
         "otp_expires_at",
@@ -83,6 +85,33 @@ class User extends Authenticatable implements JWTSubject
     }
 
     /**
+     * set firstname attribute
+     * automatically capitalized firstname
+     */
+    public function setFirstnameAttribute($vaule)
+    {
+        $this->attributes["firstname"] = ucwords(strtolower($vaule));
+    }
+
+    /**
+     * set middlename attribute
+     * automatically capitalized middlename
+     */
+    public function setMiddlenameAttribute($vaule)
+    {
+        $this->attributes["middlename"] = ucwords(strtolower($vaule));
+    }
+
+    /**
+     * set lastname attribute
+     * automatically capitalized lastname
+     */
+    public function setLastnameAttribute($vaule)
+    {
+        $this->attributes["lastname"] = ucwords(strtolower($vaule));
+    }
+
+    /**
      * set password attribute
      * automatically hash/encrypt the password
      */
@@ -90,4 +119,19 @@ class User extends Authenticatable implements JWTSubject
     {
         $this->attributes["password"] = Hash::make($value);
     }
+
+    /**
+     * get profile_picture attribute
+     * automatically convert binary data to base 64 image
+     */
+    public function getProfilePictureAttribute($value){
+        if ($value) {
+            $finfo = finfo_open(FILEINFO_MIME_TYPE);
+            $mimeType = finfo_buffer($finfo, $value);
+            finfo_close($finfo);
+            return 'data:' . $mimeType . ';base64,' . base64_encode($value);
+        }
+        return null;
+    }
+
 }
