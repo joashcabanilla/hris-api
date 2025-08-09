@@ -25,5 +25,7 @@ Route::prefix("auth")->group(
         Route::patch("updateUserCredential", [AuthController::class, "updateUserCredential"]);
         //logout route
         Route::middleware("auth:api")->post("/logout", [AuthController::class, "logout"]);
+         //refresh token route
+        Route::post("/refreshToken", [AuthController::class, "refreshToken"]);
     }
 );

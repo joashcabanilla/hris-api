@@ -199,10 +199,18 @@ class AuthService
     }
 
     /**
-     * Log out user
+     * Log out user and invalidate token, add to blacklisted
      */
     public function logout(): void
     {
         JWTAuth::invalidate(JWTAuth::getToken());
+    }
+    
+    /**
+     * refresh token for authenticated user
+     */
+    public function refreshToken(): string
+    {
+        return JWTAuth::refresh(JWTAuth::getToken());
     }
 }
