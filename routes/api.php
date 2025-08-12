@@ -1,8 +1,10 @@
 <?php
 
 use Illuminate\Support\Facades\Route;
-use App\Http\Controllers\Auth\AuthController;
-use Illuminate\Support\Facades\Hash;
+
+//controllers
+use App\Http\Controllers\AuthController;
+use App\Http\Controllers\AccountController;
 
 /**
  * AUTH API ROUTES
@@ -22,10 +24,24 @@ Route::prefix("auth")->group(
         //Validate OTP
         Route::post("validateOtp", [AuthController::class, "validateOtp"]);
         //Update User Credentials
-        Route::patch("updateUserCredential", [AuthController::class, "updateUserCredential"]);
+        Route::post("updateUserCredential", [AuthController::class, "updateUserCredential"]);
         //logout route
         Route::middleware("auth:api")->post("/logout", [AuthController::class, "logout"]);
          //refresh token route
         Route::post("/refreshToken", [AuthController::class, "refreshToken"]);
+    }
+);
+
+/**
+ * PROTECTED ROUTES
+ */
+Route::middleware("auth:api")->group(
+    function () {
+        Route::prefix("account")->group(
+            function () {
+                //update user profile picture
+                Route::post("updateProfilePicture", [AccountController::class, "updateProfilePicture"]);
+            }
+        );
     }
 );

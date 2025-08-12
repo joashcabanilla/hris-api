@@ -129,7 +129,7 @@ class User extends Authenticatable implements JWTSubject
             $finfo = finfo_open(FILEINFO_MIME_TYPE);
             $mimeType = finfo_buffer($finfo, $value);
             finfo_close($finfo);
-            return 'data:' . $mimeType . ';base64,' . base64_encode($value);
+            return "data:" . $mimeType . ";base64," . base64_encode($value);
         }
         return null;
     }
