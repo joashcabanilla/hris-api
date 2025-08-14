@@ -41,6 +41,7 @@ Route::middleware("auth:api")->group(
             function () {
                 //update user profile picture
                 Route::post("updateProfilePicture", [AccountController::class, "updateProfilePicture"]);
+                Route::post("updateUserInfo", [AccountController::class, "updateUserInfo"]);
             }
         );
     }

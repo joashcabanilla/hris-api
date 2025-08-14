@@ -20,4 +20,37 @@ class AccountService
             return $user->profile_picture;
         }
     }
+
+    /**
+     * update of user information. 
+     * @param data Object data for update request.
+     * @return User
+     */
+    public function updateUserInfo($data): User 
+    {
+        $user = User::find($data->id);
+        if($user){
+            $updateData = [
+                "firstname" => $data->firstname,
+                "lastname" => $data->lastname,
+                "email" => $data->email,
+            ];
+            
+            if(isset($data->middlename)){
+                $updateData["middlename"] = $data->middlename;
+            }
+
+            if(isset($data->username)){
+                $updateData["username"] = $data->username;
+            }
+
+            if(isset($data->password)){
+                $updateData["password"] = $data->password;
+            }
+            
+            $user->update($updateData);
+
+            return $user;
+        }
+    }   
 }

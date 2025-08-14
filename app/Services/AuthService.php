@@ -28,10 +28,7 @@ class AuthService
     {
         $result["success"] = false; 
         
-        $user = User::withTrashed()->where(function ($query) use ($username) {
-            $query->where('username', $username)
-                  ->orWhere('email', $username);
-        })->first();
+        $user = User::withTrashed()->whereRaw("BINARY username = ?", [$username])->orWhereRaw("BINARY email = ?", [$username])->first();
 
         if(!$user){
             $result["message"] = "The username or email you entered is incorrect.";
@@ -194,7 +191,8 @@ class AuthService
     {
         User::find($id)->update([
             "username" => $username,
-            "password" => $password
+            "password" => $password,
+            "status" => "active"
         ]);
     }
 
