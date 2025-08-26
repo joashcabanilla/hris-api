@@ -85,6 +85,22 @@ class User extends Authenticatable implements JWTSubject
     }
 
     /**
+     * get firstname, middlename, lastname attribute
+     * automatically capitalized
+     */
+    public function getFirstnameAttribute($value){
+        return ucwords($value);
+    }
+
+    public function getMiddlenameAttribute($value){
+        return ucwords($value);
+    }
+    
+    public function getLastnameAttribute($value){
+        return ucwords($value);
+    }
+
+    /**
      * set firstname attribute
      * automatically capitalized firstname
      */

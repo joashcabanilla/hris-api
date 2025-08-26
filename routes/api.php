@@ -5,6 +5,7 @@ use Illuminate\Support\Facades\Route;
 //controllers
 use App\Http\Controllers\AuthController;
 use App\Http\Controllers\AccountController;
+use App\Http\Controllers\AdminController;
 
 /**
  * AUTH API ROUTES
@@ -41,7 +42,16 @@ Route::middleware("auth:api")->group(
             function () {
                 //update user profile picture
                 Route::post("updateProfilePicture", [AccountController::class, "updateProfilePicture"]);
+                //update user information
                 Route::post("updateUserInfo", [AccountController::class, "updateUserInfo"]);
+            }
+        );
+
+        Route::prefix("admin")->group(
+            function(){
+                //get route
+                Route::get("getUsertypeList", [AdminController::class, "getUsertypeList"]);
+                Route::get("getUserList", [AdminController::class, "getUserList"]);
             }
         );
     }
