@@ -28,4 +28,25 @@ class AdminService{
         }
         return $user;
     }
+
+    /**
+     * Update user status
+     * @param id user id.
+     */
+    public function updateUserStatus($id, $status){
+        $user = User::withTrashed()->find($id);
+        if (!$user) {
+            return false;
+        }
+
+        if($status == "deactivate"){
+            return (bool) $user->delete();
+        }
+
+        if($user->trashed()){
+            $user->restore();
+        }
+
+        return $user->update(['status' => $status]);
+    }
 }

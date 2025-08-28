@@ -8,6 +8,7 @@ use Illuminate\Http\Request;
 //Actions
 use App\Actions\Admin\GetUsertypeListAction;
 use App\Actions\Admin\GetUserListAction;
+use App\Actions\Admin\UpdateUserStatusAction;
 
 class AdminController extends Controller
 {
@@ -26,6 +27,14 @@ class AdminController extends Controller
             "success" => $response->success,
             "message" => $response->message,
             "data" => $response->data
+        ]);
+    }
+
+    public function updateUserStatus(Request $request, UpdateUserStatusAction $updateUserStatusAction){
+        $response = $updateUserStatusAction->handle($request->all());
+        return response()->json([
+            "success" => $response->success,
+            "message" => $response->message
         ]);
     }
 }
