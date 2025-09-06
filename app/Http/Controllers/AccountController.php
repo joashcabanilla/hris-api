@@ -31,7 +31,8 @@ class AccountController extends Controller
         return response()->json([
             "user" => $response->user ?? null,
             "success" => $response->success,
-            "message" => $response->message
+            "message" => $response->message,
+            "data" => $data
         ]);
     }
 }

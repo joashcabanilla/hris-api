@@ -35,6 +35,11 @@ class AccountService
                 "lastname" => $data->lastname,
                 "email" => $data->email,
             ];
+
+            if(isset($data->usertype)){
+                $updateData["usertype_id"] = $data->usertype;
+            }
+
             
             if(isset($data->middlename)){
                 $updateData["middlename"] = $data->middlename;

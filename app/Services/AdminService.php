@@ -20,7 +20,7 @@ class AdminService{
      * @param withTrashed include soft deleted users
      */
     public function getUserList($withTrashed = true){
-        $user = User::with(["usertype:id,usertype"])->select("id","usertype_id","firstname","middlename","lastname","email","status","deleted_at","last_login_at","last_login_ip");
+        $user = User::with(["usertype:id,usertype"])->select("id","usertype_id","firstname","middlename","lastname","email","username","status","deleted_at","last_login_at","last_login_ip");
         if($withTrashed){
            $user = $user->withTrashed()->get();
         }else{
