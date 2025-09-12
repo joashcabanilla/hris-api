@@ -24,9 +24,11 @@ class User extends Authenticatable implements JWTSubject
     protected $fillable = [
         "usertype_id",
         "profile_picture",
+        "prefix",
         "firstname",
         "middlename",
         "lastname",
+        "suffix",
         "email",
         "email_verified_at",
         "otp",
@@ -148,5 +150,4 @@ class User extends Authenticatable implements JWTSubject
         }
         return null;
     }
-
 }

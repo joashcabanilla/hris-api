@@ -40,6 +40,9 @@ Route::middleware("auth:api")->group(
     function () {
         Route::prefix("account")->group(
             function () {
+                //get route
+                Route::get("getPrefixSuffixList", [AccountController::class, "getPrefixSuffixList"]);
+
                 //update user profile picture
                 Route::post("updateProfilePicture", [AccountController::class, "updateProfilePicture"]);
                 //update user information

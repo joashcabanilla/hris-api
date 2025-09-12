@@ -1,6 +1,7 @@
 <?php
 
 namespace App\Services;
+use Illuminate\Support\Facades\DB;
 
 //Models
 use App\Models\User;
@@ -52,10 +53,38 @@ class AccountService
             if(isset($data->password)){
                 $updateData["password"] = $data->password;
             }
+
+            if(isset($data->prefix)){
+                $updateData["prefix"] = $data->prefix;
+            }
+
+            if(isset($data->suffix)){
+                $updateData["suffix"] = $data->suffix == "None" ? null : $data->suffix;
+            }
             
             $user->update($updateData);
 
             return $user;
         }
-    }   
+    }
+    
+    /**
+     * get the list of prefix and suffix
+     * @return array
+     */
+    public function getPrefixSuffixList(){
+        $list = [];
+        $prefix = DB::select("SHOW COLUMNS FROM users WHERE Field = 'prefix'");
+        if (!empty($prefix)) {
+            preg_match("/^enum\((.*)\)$/", $prefix[0]->Type, $matches);
+            $list["prefix"] = str_getcsv($matches[1], ',', "'");
+        }
+
+        $suffix = DB::select("SHOW COLUMNS FROM users WHERE Field = 'suffix'");
+        if (!empty($suffix)) {
+            preg_match("/^enum\((.*)\)$/", $suffix[0]->Type, $matches);
+            $list["suffix"] = str_getcsv($matches[1], ',', "'");
+        }
+        return $list;
+    }
 }

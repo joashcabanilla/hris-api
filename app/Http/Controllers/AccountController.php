@@ -11,9 +11,19 @@ use App\Http\Requests\Account\UpdateUserInfoRequest;
 //Actions
 use App\Actions\Account\UpdateProfilePictureAction;
 use App\Actions\Account\UpdateUserInfoAction;
+use App\Actions\Account\GetPrefixSuffixListAction;
 
 class AccountController extends Controller
 {
+    public function getPrefixSuffixList(GetPrefixSuffixListAction $getPrefixSuffixListAction){
+        $response = $getPrefixSuffixListAction->handle();
+        return response()->json([
+            "success" => $response->success,
+            "message" => $response->message,
+            "data" => $response->data
+        ]);
+    }
+
     public function updateProfilePicture(Request $request, UpdateProfilePictureAction $updateProfilePictureAction)
     {
         $response = $updateProfilePictureAction->handle($request);

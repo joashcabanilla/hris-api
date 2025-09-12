@@ -6,7 +6,6 @@ class GetUsertypeListAction extends BaseAction
 {
     /**
      * @return object
-     * Handles the update of user information.
      */
     public function handle() : object
     {

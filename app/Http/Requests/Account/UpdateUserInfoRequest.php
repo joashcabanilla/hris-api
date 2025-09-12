@@ -36,7 +36,9 @@ class UpdateUserInfoRequest extends FormRequest
             Rule::unique('users', 'username')->ignore($this->id),
             ],
             "password" => "string|min:6",
-            "usertype" => "integer"
+            "usertype" => "integer",
+            "prefix" => "string",
+            "suffix" => "string"
         ];
     }
 
