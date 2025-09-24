@@ -55,6 +55,7 @@ Route::middleware("auth:api")->group(
                 //get route
                 Route::get("getUsertypeList", [AdminController::class, "getUsertypeList"]);
                 Route::get("getUserList", [AdminController::class, "getUserList"]);
+                Route::get("getEmployeeList", [AdminController::class, "getEmployeeList"]);
 
                 //post route
                 Route::post("updateUserStatus", [AdminController::class, "updateUserStatus"]);

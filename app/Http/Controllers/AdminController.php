@@ -8,10 +8,14 @@ use Illuminate\Http\Request;
 //Actions
 use App\Actions\Admin\GetUsertypeListAction;
 use App\Actions\Admin\GetUserListAction;
+use App\Actions\Admin\GetEmployeeListAction;
 use App\Actions\Admin\UpdateUserStatusAction;
 
 class AdminController extends Controller
 {
+    /**
+     * GET METHODS 
+     */
     public function getUsertypeList(GetUsertypeListAction $getUsertypeListAction){
        $response = $getUsertypeListAction->handle();
         return response()->json([
@@ -30,6 +34,18 @@ class AdminController extends Controller
         ]);
     }
 
+    public function getEmployeeList(GetEmployeeListAction $getEmployeeListAction){
+        $response = $getEmployeeListAction->handle();
+        return response()->json([
+            "success" => $response->success,
+            "message" => $response->message,
+            "data" => $response->data
+        ]);
+    }
+
+    /**
+     * POST METHODS
+     */
     public function updateUserStatus(Request $request, UpdateUserStatusAction $updateUserStatusAction){
         $response = $updateUserStatusAction->handle($request->all());
         return response()->json([
