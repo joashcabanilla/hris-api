@@ -10,6 +10,9 @@ use App\Actions\Admin\GetUsertypeListAction;
 use App\Actions\Admin\GetUserListAction;
 use App\Actions\Admin\GetEmployeeListAction;
 use App\Actions\Admin\UpdateUserStatusAction;
+use App\Actions\Admin\GetDepartmentListAction;
+use App\Actions\Admin\GetPositionListAction;
+use App\Actions\Admin\GetEmploymentStatusListAction;
 
 class AdminController extends Controller
 {
@@ -36,6 +39,33 @@ class AdminController extends Controller
 
     public function getEmployeeList(GetEmployeeListAction $getEmployeeListAction){
         $response = $getEmployeeListAction->handle();
+        return response()->json([
+            "success" => $response->success,
+            "message" => $response->message,
+            "data" => $response->data
+        ]);
+    }
+
+    public function getDepartmentList(getDepartmentListAction $getDepartmentListAction){
+        $response = $getDepartmentListAction->handle();
+        return response()->json([
+            "success" => $response->success,
+            "message" => $response->message,
+            "data" => $response->data
+        ]);
+    }
+
+    public function getPositionList(GetPositionListAction $getPositionListAction){
+        $response = $getPositionListAction->handle();
+        return response()->json([
+            "success" => $response->success,
+            "message" => $response->message,
+            "data" => $response->data
+        ]);
+    }
+
+    public function getEmploymentStatusList(GetEmploymentStatusListAction $getEmploymentStatusListAction){
+        $response = $getEmploymentStatusListAction->handle();
         return response()->json([
             "success" => $response->success,
             "message" => $response->message,

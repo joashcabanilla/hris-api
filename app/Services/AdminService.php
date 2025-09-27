@@ -1,6 +1,7 @@
 <?php
 
 namespace App\Services;
+use Illuminate\Support\Facades\DB;
 
 //Models
 use App\Models\UsertypeModel as UserType;
@@ -112,6 +113,34 @@ class AdminService{
         return $employeeList;
     }
     
+    /**
+     * Get department list 
+     */
+    public function getDepartmentList(){
+        return DepartmentList::get();
+    }
+
+    /**
+     * Get position list 
+     */
+    public function getPositionList(){
+        return PositionList::get();
+    }
+
+    /**
+     * Get employment status list 
+     */
+    public function getEmploymentStatusList(){
+        $list = [];
+        $data = DB::select("SHOW COLUMNS FROM employment_history WHERE Field = 'employment_status'");
+        if (!empty($data)) {
+            preg_match("/^enum\((.*)\)$/", $data[0]->Type, $matches);
+            $list = str_getcsv($matches[1], ',', "'");
+        }
+
+        return $list;
+    }
+
     /**
      * Update user status
      * @param id user id.
