@@ -37,8 +37,8 @@ class AdminController extends Controller
         ]);
     }
 
-    public function getEmployeeList(GetEmployeeListAction $getEmployeeListAction){
-        $response = $getEmployeeListAction->handle();
+    public function getEmployeeList(Request $request, GetEmployeeListAction $getEmployeeListAction){
+        $response = $getEmployeeListAction->handle($request->employeeId);
         return response()->json([
             "success" => $response->success,
             "message" => $response->message,

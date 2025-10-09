@@ -37,7 +37,7 @@ class AdminService{
     /**
      * Get employee list. 
      */
-    public function getEmployeeList(){
+    public function getEmployeeList($employeeId){
         //get users data
         $users = User::withTrashed()->get();
         $userList = [];
@@ -74,7 +74,11 @@ class AdminService{
         }
 
         //get employee data
-        $employees = Employee::get();
+        if($employeeId){
+            $employees = Employee::where("id",$employeeId)->get();
+        }else{
+            $employees = Employee::get();
+        }
         $employeeList = [];
         foreach($employees as $employee){
             $employeeList[] = [

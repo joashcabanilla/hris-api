@@ -7,10 +7,10 @@ class GetEmployeeListAction extends BaseAction
     /**
      * @return object
      */
-    public function handle() : object
+    public function handle($employeeId) : object
     {
         $result["success"] = false;
-        $employeeList = $this->adminService->getEmployeeList();
+        $employeeList = $this->adminService->getEmployeeList($employeeId);
         if($employeeList){
             $result["success"] = true;
             $result["message"] = "Successfully fetched the employee list.";
