@@ -10,6 +10,7 @@ use App\Models\EmployeeModel as Employee;
 use App\Models\EmploymentHistoryModel as EmploymentHistory;
 use App\Models\DepartmentListModel as DepartmentList;
 use App\Models\PositionListModel as PositionList;
+use App\Models\RegionModel as Region;
 
 class AdminService{
     /**
@@ -95,7 +96,6 @@ class AdminService{
                 "birthdate" => $employee->birthdate,
                 "gender" => $employee->gender,
                 "civilStatus" => $employee->civil_status,
-                "citizenship" => $employee->citizenship,
                 "contactNo" => $employee->contact_number,
                 "region" => $employee->region,
                 "province" => $employee->province,
@@ -143,6 +143,27 @@ class AdminService{
         }
 
         return $list;
+    }
+
+     /**
+     * Get civil status list 
+     */
+    public function getCivilStatusList(){
+        $list = [];
+        $data = DB::select("SHOW COLUMNS FROM employees WHERE Field = 'civil_status'");
+        if (!empty($data)) {
+            preg_match("/^enum\((.*)\)$/", $data[0]->Type, $matches);
+            $list = str_getcsv($matches[1], ',', "'");
+        }
+
+        return $list;
+    }
+
+    /**
+     * Get region list 
+     */
+    public function getRegionList(){
+        return Region::get();
     }
 
     /**

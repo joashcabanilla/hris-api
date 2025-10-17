@@ -18,7 +18,6 @@ class EmployeeModel extends Model
         "birthdate",
         "gender",
         "civil_status",
-        "citizenship",
         "contact_number",
         "region",
         "province",

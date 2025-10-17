@@ -13,6 +13,8 @@ use App\Actions\Admin\UpdateUserStatusAction;
 use App\Actions\Admin\GetDepartmentListAction;
 use App\Actions\Admin\GetPositionListAction;
 use App\Actions\Admin\GetEmploymentStatusListAction;
+use App\Actions\Admin\GetCivilStatusListAction;
+use App\Actions\Admin\GetRegionList;
 
 class AdminController extends Controller
 {
@@ -66,6 +68,24 @@ class AdminController extends Controller
 
     public function getEmploymentStatusList(GetEmploymentStatusListAction $getEmploymentStatusListAction){
         $response = $getEmploymentStatusListAction->handle();
+        return response()->json([
+            "success" => $response->success,
+            "message" => $response->message,
+            "data" => $response->data
+        ]);
+    }
+
+    public function getCivilStatusList(GetCivilStatusListAction $getCivilStatusListAction){
+        $response = $getCivilStatusListAction->handle();
+        return response()->json([
+            "success" => $response->success,
+            "message" => $response->message,
+            "data" => $response->data
+        ]);
+    }
+
+    public function getRegionList(GetRegionList $getRegionList){
+        $response = $getRegionList->handle();
         return response()->json([
             "success" => $response->success,
             "message" => $response->message,
