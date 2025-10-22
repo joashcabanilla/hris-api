@@ -11,6 +11,9 @@ use App\Models\EmploymentHistoryModel as EmploymentHistory;
 use App\Models\DepartmentListModel as DepartmentList;
 use App\Models\PositionListModel as PositionList;
 use App\Models\RegionModel as Region;
+use App\Models\ProvinceModel as Province;
+use App\Models\CityModel as City;
+use App\Models\BarangayModel as Barangay;
 
 class AdminService{
     /**
@@ -166,6 +169,28 @@ class AdminService{
         return Region::get();
     }
 
+    /**
+     * Get province list 
+     */
+    public function getProvinceList(){
+        return Province::get();
+    }
+
+    /**
+     * Get city list 
+     */
+    public function getCityList(){
+        return City::get();
+    }
+    
+    /**
+     * Get barangay list 
+     */
+    public function getBarangayList(){
+        return Barangay::get();
+    }
+    
+    
     /**
      * Update user status
      * @param id user id.

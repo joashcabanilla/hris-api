@@ -61,7 +61,9 @@ Route::middleware("auth:api")->group(
                 Route::get("getEmploymentStatusList", [AdminController::class, "getEmploymentStatusList"]);
                 Route::get("getCivilStatusList", [AdminController::class, "getCivilStatusList"]);
                 Route::get("getRegionList", [AdminController::class, "getRegionList"]);
-
+                Route::get("getProvinceList", [AdminController::class, "getProvinceList"]);
+                Route::get("getCityList", [AdminController::class, "getCityList"]);
+                Route::get("getBarangayList", [AdminController::class, "getBarangayList"]);
                 //post route
                 Route::post("updateUserStatus", [AdminController::class, "updateUserStatus"]);
             }

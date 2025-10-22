@@ -14,7 +14,10 @@ use App\Actions\Admin\GetDepartmentListAction;
 use App\Actions\Admin\GetPositionListAction;
 use App\Actions\Admin\GetEmploymentStatusListAction;
 use App\Actions\Admin\GetCivilStatusListAction;
-use App\Actions\Admin\GetRegionList;
+use App\Actions\Admin\GetRegionListAction;
+use App\Actions\Admin\GetProvinceListAction;
+use App\Actions\Admin\GetCityListAction;
+use App\Actions\Admin\GetBarangayListAction;
 
 class AdminController extends Controller
 {
@@ -84,8 +87,35 @@ class AdminController extends Controller
         ]);
     }
 
-    public function getRegionList(GetRegionList $getRegionList){
+    public function getRegionList(GetRegionListAction $getRegionList){
         $response = $getRegionList->handle();
+        return response()->json([
+            "success" => $response->success,
+            "message" => $response->message,
+            "data" => $response->data
+        ]);
+    }
+
+    public function getProvinceList(GetProvinceListAction $getProvinceList){
+        $response = $getProvinceList->handle();
+        return response()->json([
+            "success" => $response->success,
+            "message" => $response->message,
+            "data" => $response->data
+        ]);
+    }
+
+    public function getCityList(GetCityListAction $getCityListAction){
+        $response = $getCityListAction->handle();
+        return response()->json([
+            "success" => $response->success,
+            "message" => $response->message,
+            "data" => $response->data
+        ]);
+    }
+
+    public function getBarangayList(GetBarangayListAction $getBarangayListAction){
+        $response = $getBarangayListAction->handle();
         return response()->json([
             "success" => $response->success,
             "message" => $response->message,
