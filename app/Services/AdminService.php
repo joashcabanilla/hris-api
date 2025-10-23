@@ -67,7 +67,7 @@ class AdminService{
         }
         
         //get current employment history data
-        $employmentHistory = EmploymentHistory::whereNull("end_date")->get();
+        $employmentHistory = EmploymentHistory::orderBy("end_date","desc")->limit(1)->get();
         $employmentHistoryList = [];
         foreach($employmentHistory as $employment){
             $employmentHistoryList[$employment->employee_id] = [
